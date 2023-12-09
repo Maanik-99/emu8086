@@ -31,9 +31,9 @@ input macro
         
 endm
 
-space macro char
+space macro 
     mov ah,2
-    mov dl,char
+    mov dl,' '
     int 21h
 endm    
 
@@ -64,7 +64,7 @@ inputLoop:
     mov [di], al ; Store the digit in the array
     ;mov [si], al ; Store the digit in the array                                             
      
-    space " "                                          
+    space                                         
                                                 
     inc di
     loop inputLoop

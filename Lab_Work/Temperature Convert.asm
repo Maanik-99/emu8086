@@ -43,14 +43,7 @@ mov bx,9
 div bx
 add ax,1
 mov C,ax
-
- 
- 
-  
- 
- 
-    
-    
+   
 main endp
 end main
 

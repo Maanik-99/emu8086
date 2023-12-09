@@ -41,10 +41,7 @@ main proc
   dec si 
 
   Loop EO
-  
-  
- 
- 
+
  mov ah,4ch
  int 21h
  main endp
