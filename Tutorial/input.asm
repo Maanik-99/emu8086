@@ -11,13 +11,15 @@ main proc
 
 ; input
  mov ah,01 ;scanf function er moto kaj kore
- int 21h
- sub al,48 
+ int 21h ;terminal ana
+ ;input ta muloto al=store
+ ;sub al,48
+ sub al,'0' 
+ ; char a='5'
+ ;decimal ='5'-'0'
 
-;  input value store in al register
 
-;dl er valui tai mainly print hoy
-mov dl,al
+mov dl,al ;dl=al
 add dl,48
 mov ah,02 ;show output/printf
 int 21h ;terminal call

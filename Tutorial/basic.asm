@@ -3,7 +3,8 @@ org 100h
 .stack 100h
 .data
 ; variable declearation
-n dw 0 ;int a
+n dw 0 ;int a=10
+
 .code
 
 main proc  

@@ -12,7 +12,10 @@ newline db 10,13,"$"
 main proc  
 mov ax,@data
 mov ds,ax
-;   lea/offset
+;   lea/offset 
+
+    
+ 
     mov ah,9 ;printf function
     mov dx,offset msg
     int 21h
