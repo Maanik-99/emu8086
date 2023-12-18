@@ -1,4 +1,4 @@
-; Roberto Luiz Debarba <roberto.debarba@gmail.com> 2015
+; Pankaj and mahi (aryanpankaj78@gmail.com)  October 20,2023
 ; 8086 Assembly, emu8086
 
 data segment
@@ -10,11 +10,11 @@ data segment
     column db 0
     page_number db 0   
     
-    word_1 db "ROBERTO$"
-    word_2 db "HOUSE$"
+    word_1 db "PANKAJ$"
+    word_2 db "MAHI$"
     word_3 db "SCHOOL$"
     word_4 db "COMPUTER$"
-    word_5 db "FRIEND$"
+    word_5 db "MICROPROCESSOR$"
     
     word_pointer dw dup 5 (?)
 ends

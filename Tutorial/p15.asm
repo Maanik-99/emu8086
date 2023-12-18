@@ -5,7 +5,7 @@ include 'emu8086.inc'
 
 .data
 n db ?
-m db ?
+m dw 2
 k dw ?
 sum dw ?
 
@@ -18,21 +18,17 @@ main proc
   call scan_num ; Input number from built-in proc
   mov k, cx      ; Store number in k
    
-  print 'Seris is:'
-  start:
-  mov ax,k ;9,8,1
-  add sum,ax;sum=9+8+....+1
-  call print_num_uns ;9+8+.......+1=45
-  dec k ;8,7,1,0
-  cmp k,0;
-  je cal
-  print '+'
-  
-loop start ;8,7,1
-  cal:
-  print '='
-  mov ax,sum
-  call print_num_uns
+ ;sum=n*(n+1)/2
+ mov ax,cx
+ add ax,1
+ mul k
+ div m 
+ mov sum,ax 
+
+ printn 'Summation: '
+ mov ax,sum
+ call print_num_uns
+
 
 exit:
   mov ah, 4ch

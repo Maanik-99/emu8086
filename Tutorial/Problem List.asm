@@ -6,7 +6,7 @@
   Input: 2 2
  Output:4,0
 
-2.	Input two characters and print alphabet order and reversely alphabet order?
+2.Input two characters and print alphabet order and reversely alphabet order?
 Input: g
 Input: a
 Alphabet order: a g
@@ -14,7 +14,7 @@ Reversely alphabet order: g a
 
  3. Perform addition, subtraction, multiplication and division of 6 and 2 these two numbers in a single code.
 
-  4. Take two single digit integer inputs    from and perform addition, subtraction, multiplication and division
+4. Take two single digit integer inputs    from and perform addition, subtraction, multiplication and division
 
 5.	Find out the largest number between two numbers using assembly language.
 
@@ -40,7 +40,8 @@ C
 13.	Take a number input from user, check whether the given number is divisible by 5 or not.
 
 14.	Summation of first N numbers using assembly language.
-Input : 9
+Input : 9 
+9+8+7+6+....+1=45
 Sum=45
 
 15.	Find the Factorial of a number?

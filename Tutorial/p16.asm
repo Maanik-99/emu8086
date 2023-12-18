@@ -4,35 +4,37 @@ include 'emu8086.inc'
 .stack 100h
 
 .data
+a db 50 dup(?)
+b db 50 dup(?)
+c db 50 dup(?)
 n db ?
 m db ?
 k dw ?
-sum dw ?
 
 .code
 main proc
   mov ax, @data
   mov ds, ax
 
-  printn 'Enter Num:'
+  print ' Enter Num:'
+
   call scan_num ; Input number from built-in proc
   mov k, cx      ; Store number in k
-   
-  print 'Seris is:'
-  start:
-  mov ax,k ;9,8,1
-  add sum,ax;sum=9+8+....+1
-  call print_num_uns ;9+8+.......+1=45
-  dec k ;8,7,1,0
-  cmp k,0;
-  je cal
-  print '+'
+  printn ' '
   
-loop start ;8,7,1
-  cal:
-  print '='
-  mov ax,sum
-  call print_num_uns
+  ;compare
+  and cx,1
+  jz even
+
+  printn ' '
+  printn ' Output:'
+  print ' Odd'
+  jmp exit
+  
+  even:
+  printn ' '
+  printn ' Output:'
+  print ' Even'
 
 exit:
   mov ah, 4ch
@@ -43,6 +45,7 @@ define_print_num ; Define print_num macro
 define_print_num_uns ; Define print_num_uns macro
 define_get_string ; Define get_string macro
 
+ ; Implement missing macros
 end main
 
 

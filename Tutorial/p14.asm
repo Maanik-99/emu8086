@@ -5,9 +5,9 @@ include 'emu8086.inc'
 
 .data
 n db ?
-m db ?
+m dw 2
 k dw ?
-sum dw ?
+sum dw 0
 
 .code
 main proc
@@ -16,21 +16,21 @@ main proc
 
   printn 'Enter Num:'
   call scan_num ; Input number from built-in proc
-  mov k, cx      ; Store number in k
-   
-  print 'Seris is:'
-  start:
-  mov ax,k ;9,8,1
-  add sum,ax;sum=9+8+....+1
-  call print_num_uns ;9+8+.......+1=45
-  dec k ;8,7,1,0
-  cmp k,0;
-  je cal
-  print '+'
+  mov k, cx      ; Store number in k 
+  mov ax,cx
   
-loop start ;8,7,1
+  
+  print 'Factorial is:'
+  start:
+  dec k ;4,3,2
+  mul k 
+  mov sum,ax ;20+60+120+120=340
+  cmp k,1;
+  je cal
+    
+loop start 
   cal:
-  print '='
+  ;print '='
   mov ax,sum
   call print_num_uns
 

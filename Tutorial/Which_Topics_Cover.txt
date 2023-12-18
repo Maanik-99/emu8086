@@ -42,7 +42,8 @@ JA /JNBE-> Jump if above, not below, or equal i.e. when CF and ZF = 0
 JB/JNAE/JC-> Jump if below, not above, equal or carry i.e. when CF = 0
 
 Opcode Description Flag
-cmp 9,8=9-8=1
+cmp 9,8
+
 JA->Jump IF above CF=0 and ZF=0
 JAE->Jump IF above or equal CF=0
 JB->Jump IF below CF
@@ -60,6 +61,7 @@ ax= ah(higher 8bits)+al(lower 8bits)
  1111 1111 11111111 //decimal 2= binary 10
  binary theke hexa 4 bit
  2 power 16=65536 //65537
+ 
  
 AX->This is accumulator register. It is a 16 bit register.
 BX->It is known as base register. Used for store the value of offset.

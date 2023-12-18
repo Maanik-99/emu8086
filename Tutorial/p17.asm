@@ -18,19 +18,21 @@ main proc
   call scan_num ; Input number from built-in proc
   mov k, cx      ; Store number in k
    
-  print 'Seris is:'
+  print 'Odd num Seris is:'
   start:
   mov ax,k ;9,8,1
   add sum,ax;sum=9+8+....+1
   call print_num_uns ;9+8+.......+1=45
-  dec k ;8,7,1,0
-  cmp k,0;
+  ;dec k ;8,7,1,0
+  sub k,2
+  cmp k,1;
   je cal
   print '+'
   
 loop start ;8,7,1
   cal:
-  print '='
+  print '+1='
+  add sum,1
   mov ax,sum
   call print_num_uns
 
