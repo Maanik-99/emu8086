@@ -4,7 +4,7 @@ org 100h
 .data
     array db 7 dup(?) ; Array to store input digits
     temp db 0 ; Temporary variable for swapping
-    msgInput db "Enter the elements of array (7 digits): $"
+    msgInput db 10,13,"Enter the elements of array (7 digits): $"
     msgAscending db "Ascending: $"
     msgDescending db "Descending: $"
     newline db 10,13,"$" ; Newline character for output
@@ -69,15 +69,20 @@ printDescendingLoop:
     loop printDescendingLoop
 main endp
 ascendingOrder proc
-    mov si,00   
+
+; Here is the main logic of sort using BubbleSort
+; 5,9,3,1,2,6,4  
+; I see the debug this code how it work do not talk any confusion just try to understand it
+; and comments below?
+    mov si,0   
     mov cx,7   ;Number of array elements                           
     sub cx,1      ;n-1 iterations (bubble sort)
 BubbleSort:
-        cmp cx,si          
+        cmp cx,si    ;check if we have reached the end of the array
         jz Next                    
-        mov al,array[si]  
-        mov bl,array[si+1]  
-        cmp al,bl           
+        mov al,array[si]  ;prothom value ta ami al nilami array[si]
+        mov bl,array[si+1]  ;2nd value ta ami al nilami array[si+1]
+        cmp al,bl          ; al boro hole swap korlam nah lo si er maan ek baray abar check korte hobe ebae jokhon nah cx and si 0 nah hoy 
         ja Swap
         add si,1           
         jmp BubbleSort
@@ -87,9 +92,9 @@ BubbleSort:
         add si,1
         jmp BubbleSort        
     Next:                   
-        mov si,0            
-        sub cx,1            
-        cmp cx,0
+        mov si,0 ;etar mane holo ami next step jabo ekhon eta bujar jonno ami bubble sort er algorithm dekhay ashi wait.      
+        sub cx,1  ;No. of step check this value          
+        cmp cx,0 ;if this value is zero then loop will be terminated and work will be done
         jnz BubbleSort
     ret       
 ascendingOrder endp    

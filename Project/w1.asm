@@ -4,7 +4,6 @@
 ;; Email: aryanpankaj78@gmail.com  
 ;; Email: mahi@gmail.com
 ;; =================================================================================
-include 'emu8086.inc'
 data segment
     counter           db   0
     column_counter    db   0
@@ -50,21 +49,6 @@ start:
                mov  ds, ax
                mov  ax, 0b800h;show video of text mood And Video Memory      
                mov  es, ax
-               
-               ;print check word
-               printn 'Start The Gaming!!!!!'
-               printn 'First Design The Background.......'
-               printn 'Then Show the All Word Hunt in The Display With Color->>>>>>'
-               printn 'When Complete The Word Hunt Then Design the Input Section'
-               printn 'Then Comming the Input Section Curser->>>>'
-               printn 'When user input Something and When Press The Enter Button!!!'
-               printn 'Game is Start Now!!!!!!->>>>' 
-               mov ah,2
-               mov dl,WORD_HUNT[0]
-               int 21h
-               mov ah,2
-               mov dl,WORD_HUNT[1199]
-               int 21h
                                                     
 SET_BACKGROUND_COLOR:      
                mov  cx, 4001
@@ -187,17 +171,20 @@ SET_CURSOR:
                mov  ah, 2
                int  10h ;provide video services
                
-               ;input section
-               lea  dx, search
-               mov  ah, 0ah
-               int  21h
-               mov  bx, dx
-               mov  ah, 0
-               mov  al, ds:[bx+1] ;find the length of word
-               mov  number_of_letters, ax
-               add  bx, ax
-               mov  byte ptr [bx+2], '$'
-               mov  si, 0
+            ;input section
+            lea  dx, search    ; Load the address of the 'search' array into the dx register
+            mov  ah, 0ah       ; Set the DOS function number for buffered input (0Ah)
+            int  21h           ; Call the DOS interrupt to perform buffered input
+
+            mov  bx, dx        ; Move the address of 'search' into bx
+            mov  ah, 0         ; Clear the ah register
+            mov  al, ds:[bx+1] ; Load the length of the input (excluding the '$') into al
+            mov  number_of_letters, ax ; Move the length into the 'number_of_letters' variable
+
+            add  bx, ax        ; Move the bx register to the end of the input string
+            mov  byte ptr [bx+2], '$' ; Add the '$' terminator at the end of the input string
+            mov  si, 0         ; Initialize si to 0, pointing to the beginning of the 'search' array
+
 
                cmp  number_of_letters, 4
                jl   SEARCH_WORD
@@ -262,10 +249,8 @@ CHECK_RESET:
 SEARCH_WORD:               
                cmp  WORD_HUNT[si], 0
                je   DRAW_ERROR_CURSOR
-                                     
-               ;search[0]=20
-               ;search[1]=22                   
-               mov  al, search[2] ;1st Char is Search string
+
+               mov  al, search[2]
                cmp  al, WORD_HUNT[si]
                je   FOUND_FIRST_LETTER
 
@@ -284,93 +269,81 @@ NEW_LINE:
 
 FOUND_FIRST_LETTER:        
                push si
-               
-               ;Search right
+
                mov  cx, 60
                mov  dx, 1
                call RESET
-               call SEARCH_COMPLETE_WORD 
-               
-               ;Search left
+               call SEARCH_COMPLETE_WORD
                pop  si
                push si
                mov  dx, -1
                call RESET
                call SEARCH_COMPLETE_WORD
-               
-               ;Search Down
+
                mov  cx, 1199
                call RESET
                pop  si
                push si
                mov  dx, 60
                call SEARCH_COMPLETE_WORD
-               
-               ;Search Up
                mov  dx, -60
                call RESET
                pop  si
                push si
                call SEARCH_COMPLETE_WORD
-               
-               ;Diagonal (Bottom-Left)
+
                mov  cx, 1199
                call RESET
                pop  si
                push si
                mov  dx, 59
                call SEARCH_COMPLETE_WORD
-               
-               ;Diagonal (Top-Right)
                mov  dx, -59
                call RESET
                pop  si
                push si
                call SEARCH_COMPLETE_WORD
-               
-               ;Diagonal (Bottom-Right)
+
                mov  cx, 1199
                call RESET
                pop  si
                push si
                mov  dx, 61
                call SEARCH_COMPLETE_WORD
-               
-               ;Diagonal (Top-Left)
                mov  dx, -61
                call RESET
                pop  si
                push si
                call SEARCH_COMPLETE_WORD
-               
-               ;Direction Check Complete Here 
 
                pop  si
                inc  si
                jmp  SEARCH_WORD
 
 SEARCH_COMPLETE_WORD:      
-               inc  di  ;count the number char check
+    inc  di                    ; Increment the index `di` representing the position in the search word.
 
-               cmp  di, number_of_letters
-               je   FOUND_WORD
+    cmp  di, number_of_letters ; Compare `di` with the total number of letters in the search word.
+    je   FOUND_WORD             ; If `di` is equal to the total number of letters, the entire word is found.
 
-               inc  bx ;search value index store in bx
-               add  si, dx
+    inc  bx                    ; Increment `bx`, which represents the position in the search buffer.
+    add  si, dx                ; Add `dx` (direction) to `si`, updating the index in the WORD_HUNT array.
 
-               cmp  bx, cx
-               jg   RETURN
-               cmp  si, 0
-               jl   RETURN
+    cmp  bx, cx                ; Compare `bx` with `cx`, which represents the total length of the search buffer.
+    jg   RETURN                ; If `bx` is greater than `cx`, return from the subroutine.
 
-               mov  al, search[bx]
-               cmp  al, WORD_HUNT[si]
-               je   SEARCH_COMPLETE_WORD
+    cmp  si, 0                 ; Compare `si` with 0 to ensure it doesn't go below zero.
+    jl   RETURN                ; If `si` is less than 0, return from the subroutine.
 
-               ret
+    mov  al, search[bx]        ; Load the character at position `bx` in the search buffer into the `al` register.
+    cmp  al, WORD_HUNT[si]     ; Compare the loaded character with the character in the WORD_HUNT array at position `si`.
+    je   SEARCH_COMPLETE_WORD  ; If they match, continue searching for the next character.
 
-RETURN:                    
-               ret
+    ret                         ; Return from the subroutine.
+
+RETURN:                         ; Label for returning from the subroutine.
+    ret
+
 
 FOUND_WORD:    
                ;find letter so create sound

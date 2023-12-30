@@ -1,4 +1,5 @@
-include 'emu8086.inc'
+;include 'emu8086.inc'
+ORG 100H
 .stack 100h
 .model small 
 .data

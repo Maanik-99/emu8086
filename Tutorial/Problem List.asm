@@ -102,3 +102,9 @@ Input:
 Output:
 ODD Digits: 17
 EVEN Digits: 18
+
+ Search Algorithm using Assembly language
+ 
+                  1.Linear Search (solved this)
+                  2.Binary Search (solved)
+                  3.Jump Search (solved)

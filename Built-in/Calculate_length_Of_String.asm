@@ -39,7 +39,8 @@ MAIN PROC
            
     MOV SI, 0  
 CALCULATE_LENGTH:  
-    CMP BYTE PTR [A + SI], 0 
+    CMP BYTE PTR [A + SI], 0 ;compare with null equal to 0
+    ; CMP [A+si], 0 
     JE  PRINT_LENGTH  
     INC SI  
     JMP CALCULATE_LENGTH  

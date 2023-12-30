@@ -7,7 +7,6 @@ org 100h
     msgInput db "Enter n: $"
     msgOdd db "Summation of Odd Numbers Sum= $"
     msgEven db "Summation of Even Numberes Sum= $"
-    msgTotal db "Total Sum= $"
     sum dw 0
     k dw ?
     EvenVal dw 0 ; Variable to store the minimum value
@@ -91,17 +90,6 @@ OddDigit macro
    output bh
 endm
 
-TotalSum macro
-   show newline
-   show msgTotal
-   mov ax,sum
-   mov bl,10
-   div bl
-      
-   mov bx,ax
-   output bl
-   output bh
-endm
 
 SumOddEven macro 
   mov cx,k
@@ -139,7 +127,7 @@ main proc
     input
 
     ; Print sum
-    TotalSum
+    ; TotalSum
     SumOddEven
     OddDigit
     EvenDigit
