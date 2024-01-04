@@ -4,9 +4,10 @@ org 100h
 .model small
 .stack 100h
 .data
-arr db 10,7,8,5,2,5,3
+arr db 15,25,35,45,55
 size equ $-arr
-search db 5
+search db 45 
+index dw 0
 
 
 .code
@@ -14,33 +15,59 @@ main proc
       mov ax,@data
       mov ds,ax
 
-      call Linear
+      call BinarySearch
 
 Exit:
       mov ah,4ch
-      int 21h
+      int 21h 
+      
 main endp
         
-        Linear proc 
-        lea si,arr
-        mov cx,size
-        check:
-        mov bl,[si]
-        cmp bl,search
-        je find
-        inc si
-        Loop check
+        BinarySearch proc
+            
+         mov cx,0 
+         mov dx,size
+  
+       Binary:
+       cmp cx,dx 
+       jg notfound 
+       mov si,cx 
+       add si,dx 
+       shr si,1 
+       
+       
+       mov al,arr[si]
+       mov index,si
+        
+       cmp al,search 
+       je found 
+       jl update_low
+       jg update_high
+    
+       update_low:
+       inc si
+       mov cx,si
+       jmp Binary 
+    
+       update_high:
+       dec si
+       mov dx,si
+       jmp Binary
 
-        notfind:
+        notfound:
         printn 
         print 'Number not find!!'
+       
         ret
 
-        find:
+        found:
         printn
-        print 'Number is found!'
+        print 'Artifact Fount at Index:'
+        
+        mov ax,index
+        call print_num_uns
         ret
-        Linear endp
+        BinarySearch endp
 
 define_scan_num
 define_print_num_uns
