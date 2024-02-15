@@ -61,3 +61,62 @@ main proc
 
 main endp
 end main
+
+----------------
+include 'emu8086.inc'
+org 100h
+.model small
+.data
+n db ?
+m db ?
+k db 5
+
+.code
+
+main proc
+    mov ax,@data
+    mov ds,ax
+    
+    printn
+    print 'Enter Your Num:'
+    
+    ;input
+    mov ah,1
+    int 21h 
+    sub al,'0'
+    mov n,al
+    
+    ;check divisible or not
+    mov ah,0
+    mov al,n
+    ;mov bl,k 
+    ;div bl 
+    div k
+    mov m,ah 
+
+    cmp m,0
+    je Divisible
+    
+    
+    printn
+     mov ah,2
+    mov dl,n 
+    add dl,48
+    int 21h
+    print ' Number is not Divisible by 5!'
+    jmp exit
+    
+    Divisible:
+    printn
+    mov ah,2
+    mov dl,n
+    add dl,48
+    int 21h
+    print ' Number is Divisible by 5!'
+    
+    main endp
+
+exit:
+    mov ah,4ch
+    int 21h
+end main    
